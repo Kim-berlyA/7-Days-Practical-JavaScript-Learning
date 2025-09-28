@@ -8,7 +8,7 @@
 6. Click equals
 */
 
-import Calculator from "./calculator";
+import Calculator from "./calculator.js";
 
 const primaryOperandDisplay = document.querySelector("[data-primary-operand]");
 const secondaryOperandDisplay = document.querySelector(

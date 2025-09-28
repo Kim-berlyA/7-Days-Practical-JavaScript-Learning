@@ -42,3 +42,8 @@
 
     - Define the clear method
         - So understanding what actually happens when we press clear btn is all the values get clear basically empty and 0 is displayed we can acheive it through making the primary input 0 and remaining things empty strings.
+
+    - Define the addDigit method
+        - How would you do it?
+        - we will add the textContent for primaryOperand as we will get the value
+        - also we will add a check that if our primaryOperand is 0 then we will first overwrite the value and then append values to it.
