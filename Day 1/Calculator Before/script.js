@@ -24,8 +24,8 @@ operators.forEach(operator => {
 });
 
 equalsBtn.addEventListener('click', () => {
-  const prev = parseFloat(secondaryOperand.textContent);
-  const current = parseFloat(primaryOperand.textContent);
+  const prev = parseInt(secondaryOperand.textContent);
+  const current = parseInt(primaryOperand.textContent);
   const operation = document.querySelector('[data-operation]').textContent;
 
   let result;
