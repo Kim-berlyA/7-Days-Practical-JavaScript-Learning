@@ -48,6 +48,15 @@ class Calculator {
      this.primaryOperand = this.primaryOperandDisplay.dataset.value + digit;
   }
 
+  removeDigit(){
+    const numberString = this.primaryOperandDisplay.dataset.value;
+    if(numberString <= 1){
+        this.primaryOperand = 0;
+        return;
+    }
+    this.primaryOperand = numberString.substring(0, numberString.length-1);
+  }
+
   // Making a Clear Method
   clear() {
     this.primaryOperand = 0;

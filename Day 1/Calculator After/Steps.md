@@ -72,3 +72,10 @@
             - if it's not empty we will split our stringNumber to the decimal character and then we can get the integer part and the fraction part seperated.
             - now if we don't have any decimal part we will just format the integer and return it.
             - also we will add a check when we are adding the decimal part to our digit is that if it has occured once we cannot add it second time if user tries to do so we will just return it!
+
+    - Define the removeDigit method
+        - Have you ever solved dsa question substring from strings?
+        - The same functionality is what i am going to use it right here in this feature.
+
+        - Simply creating a variable and then checking if it has length equals to 1 below 1 we will make it 0
+        - Also we will remove the element by using subString method and taking out the inputs from 0 to length-1
