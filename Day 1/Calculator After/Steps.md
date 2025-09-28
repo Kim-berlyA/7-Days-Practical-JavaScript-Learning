@@ -79,3 +79,11 @@
 
         - Simply creating a variable and then checking if it has length equals to 1 below 1 we will make it 0
         - Also we will remove the element by using subString method and taking out the inputs from 0 to length-1
+
+    - Define the Operation method
+        - So we didn't create getter and setter methods for operations so let us do that first.
+        - Then what we will do is define a method for operations
+        - take the current operation from get operation
+        - use it to display the value on screen 
+        - then check if we have already used it then we won't be using it again because it will break the functionality
+        

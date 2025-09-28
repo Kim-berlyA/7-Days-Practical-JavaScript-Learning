@@ -22,10 +22,20 @@ class Calculator {
     this.primaryOperandDisplay.textContent = displayNumber(value);
   }
 
+  // Get Secondary Operand
+  get secondaryOperand() {
+    return parseFloat(this.secondaryOperandDisplay.dataset.value);
+  }
+
   // Set Secondary Operand
   set secondaryOperand(value) {
     this.secondaryOperandDisplay.dataset.value = value ?? "";
     this.secondaryOperandDisplay.textContent = displayNumber(value);
+  }
+
+  // Get Operations
+  get operation() {
+    return this.operationDisplay.textContent;
   }
 
   // Set Operations
@@ -36,7 +46,10 @@ class Calculator {
   // Adding a Digit Logic
   addDigit(digit) {
     // Check if decimal point is repeted or not
-    if (digit === "." && this.primaryOperandDisplay.dataset.value.includes(".")) {
+    if (
+      digit === "." &&
+      this.primaryOperandDisplay.dataset.value.includes(".")
+    ) {
       return;
     }
 
@@ -45,16 +58,25 @@ class Calculator {
       return;
     }
 
-     this.primaryOperand = this.primaryOperandDisplay.dataset.value + digit;
+    this.primaryOperand = this.primaryOperandDisplay.dataset.value + digit;
   }
 
-  removeDigit(){
+  // Remove a Digit Logic
+  removeDigit() {
     const numberString = this.primaryOperandDisplay.dataset.value;
-    if(numberString <= 1){
-        this.primaryOperand = 0;
-        return;
+    if (numberString <= 1) {
+      this.primaryOperand = 0;
+      return;
     }
-    this.primaryOperand = numberString.substring(0, numberString.length-1);
+    this.primaryOperand = numberString.substring(0, numberString.length - 1);
+  }
+
+  // Add Operation to a digit logic
+  chooseOperation(operation){
+    if(this.operation !== "") return;
+    this.operation = operation;
+    this.secondaryOperand = this.primaryOperand;
+    this.primaryOperand = 0;
   }
 
   // Making a Clear Method
@@ -81,7 +103,7 @@ function displayNumber(number) {
   const formattedInteger = NUMBER_FORMATTER.format(integer);
 
   // if decimal number is null then return formatted digit itself
-  if(decimal == null) return formattedInteger;
+  if (decimal == null) return formattedInteger;
   return formattedInteger + "." + decimal;
 }
 
