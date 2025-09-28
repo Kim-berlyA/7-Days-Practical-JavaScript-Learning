@@ -4,31 +4,33 @@ class Calculator {
     secondaryOperandDisplay,
     operationDisplay
   ) {
-    this.primaryOperand = primaryOperandDisplay;
-    this.secondaryOperand = secondaryOperandDisplay;
-    this.operation = operationDisplay;
+    this.primaryOperandDisplay = primaryOperandDisplay;
+    this.secondaryOperandDisplay = secondaryOperandDisplay;
+    this.operationDisplay = operationDisplay;
 
     this.clear();
   }
 
   // Get Primary Operand
   get primaryOperand(){
-    return parseFloat(this.primaryOperand.textContent);
+    return parseFloat(this.primaryOperandDisplay.dataset.value);
   }
 
   // Set Primary Operand
   set primaryOperand(value){
-    this.primaryOperand.textContent = value ?? "";
+    this.primaryOperandDisplay.dataset.value = value ?? "";
+    this.primaryOperandDisplay.textContent = displayNumber(value);
   }
 
   // Set Secondary Operand
   set secondaryOperand(value){
-    this.secondaryOperand.textContent = value ?? "";
+    this.secondaryOperandDisplay.dataset.value = value ?? "";
+    this.secondaryOperandDisplay.textContent = displayNumber(value);
   }
 
   // Set Operations
   set operation(value){
-    this.operation.textContent = value ?? "";
+    this.operationDisplay.textContent = value ?? "";
   }
 
   // Adding a Digit Logic
@@ -46,6 +48,16 @@ class Calculator {
     this.secondaryOperand = null; // instead of string setting this to null
     this.operation = null; // same goes to this too
   }
+}
+
+// Variable to format numbers
+const NUMBER_FORMATTER = new Intl.NumberFormat("en", {
+    maximumFractionDigits : 20
+});
+
+// Creating a Function to add commas to the digits
+function displayNumber(number){
+    return NUMBER_FORMATTER.format(number);
 }
 
 export default Calculator;

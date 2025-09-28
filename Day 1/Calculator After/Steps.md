@@ -48,3 +48,16 @@
         - we will add the textContent for primaryOperand as we will get the value
         - also we will add a check that if our primaryOperand is 0 then we will first overwrite the value and then append values to it.
         - We can make improvements to our code as our code right now is not a clean code and as per SOLID principles we are repeating so many things like the textContent so the solution for this will be to create getters and setters methods.
+        
+        - Creating a Simple Function to Display all the values with commas
+        ```js
+        const NUMBER_FORMATTER = new Intl.NumberFormat("en", {
+            maximumFractionDigits : 20
+        });
+
+        function displayNumber(number){
+            return NUMBER_FORMATTER.format(number)
+        }
+        ```
+        
+        - So the problem that we are facing here is that when we set the commas to the number what actually happens is that js behind the scene doesn't understand how commas work with number so it's not making it work as we want it to work so for that what we will do is in our setter function what we will do is use 1 property to display numbers and 1 property to perform calculations behind the scenes.
