@@ -79,6 +79,33 @@ class Calculator {
     this.primaryOperand = 0;
   }
 
+  // Evaluate the calculations
+  evaluate(){
+    let result;
+
+    switch (this.operation){
+        case "*":
+            result = this.secondaryOperand * this.primaryOperand;
+            break;
+        case "÷":
+                        result = this.secondaryOperand / this.primaryOperand;
+            break;
+        case "+":
+                        result = this.secondaryOperand + this.primaryOperand;
+            break;
+        case "-":
+                        result = this.secondaryOperand - this.primaryOperand;
+            break;
+        default :
+            return;
+    }
+
+    this.clear();
+    this.primaryOperand = result;
+  
+    return result;
+  }
+
   // Making a Clear Method
   clear() {
     this.primaryOperand = 0;

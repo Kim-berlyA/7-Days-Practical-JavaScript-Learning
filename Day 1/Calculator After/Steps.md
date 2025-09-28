@@ -87,3 +87,9 @@
         - use it to display the value on screen 
         - then check if we have already used it then we won't be using it again because it will break the functionality
         
+    - Define the Evaluation method
+        - we will the a result var and then calculate the operations in switch case
+        - then we will clear the calc
+        - print the result
+        - return result
+
