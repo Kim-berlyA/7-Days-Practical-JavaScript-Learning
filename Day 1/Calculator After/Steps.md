@@ -33,3 +33,12 @@
     - Same way do for delete key so instead of addDigit we can do removeDigit!
     - Same way we will target out operations as chooseOperation
     - Same way we can perform it for evaluation
+
+- Now when i carefully observed the inputs that are for Primary Operand Secondary Operand and Data Operation we come to know that basically it's the thing we have to target in our JS file.
+    - Target primary operand, secondary operand, and operation as our display elements.
+    - So to tell the Calculator what to display and what operations to perform what i will do is pass this information to my class.
+
+    - Then inside of the calculator you can create a constructor and set their values.
+
+    - Define the clear method
+        - So understanding what actually happens when we press clear btn is all the values get clear basically empty and 0 is displayed we can acheive it through making the primary input 0 and remaining things empty strings.
