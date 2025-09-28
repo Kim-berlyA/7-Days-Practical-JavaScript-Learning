@@ -47,3 +47,4 @@
         - How would you do it?
         - we will add the textContent for primaryOperand as we will get the value
         - also we will add a check that if our primaryOperand is 0 then we will first overwrite the value and then append values to it.
+        - We can make improvements to our code as our code right now is not a clean code and as per SOLID principles we are repeating so many things like the textContent so the solution for this will be to create getters and setters methods.
