@@ -48,7 +48,7 @@
         - we will add the textContent for primaryOperand as we will get the value
         - also we will add a check that if our primaryOperand is 0 then we will first overwrite the value and then append values to it.
         - We can make improvements to our code as our code right now is not a clean code and as per SOLID principles we are repeating so many things like the textContent so the solution for this will be to create getters and setters methods.
-        
+
         - Creating a Simple Function to Display all the values with commas
         ```js
         const NUMBER_FORMATTER = new Intl.NumberFormat("en", {
@@ -61,3 +61,14 @@
         ```
         
         - So the problem that we are facing here is that when we set the commas to the number what actually happens is that js behind the scene doesn't understand how commas work with number so it's not making it work as we want it to work so for that what we will do is in our setter function what we will do is use 1 property to display numbers and 1 property to perform calculations behind the scenes.
+
+        - So now what happens here is that we cannot add that decimal pointer to our digits in our calc
+        - It's because Js cannot recognize how does the decimal get's added to the number so what we will be doing is
+
+        - So what we can do is handle the seperately take our number before the decimal and then take out number after the dicimal point 
+            - in out displayNumber function we can check
+            - convert our number to string and then if that number is empty string or not?
+            - if it's empty then we will return  empty string
+            - if it's not empty we will split our stringNumber to the decimal character and then we can get the integer part and the fraction part seperated.
+            - now if we don't have any decimal part we will just format the integer and return it.
+            - also we will add a check when we are adding the decimal part to our digit is that if it has occured once we cannot add it second time if user tries to do so we will just return it!

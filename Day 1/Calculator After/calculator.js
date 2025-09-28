@@ -12,34 +12,40 @@ class Calculator {
   }
 
   // Get Primary Operand
-  get primaryOperand(){
+  get primaryOperand() {
     return parseFloat(this.primaryOperandDisplay.dataset.value);
   }
 
   // Set Primary Operand
-  set primaryOperand(value){
+  set primaryOperand(value) {
     this.primaryOperandDisplay.dataset.value = value ?? "";
     this.primaryOperandDisplay.textContent = displayNumber(value);
   }
 
   // Set Secondary Operand
-  set secondaryOperand(value){
+  set secondaryOperand(value) {
     this.secondaryOperandDisplay.dataset.value = value ?? "";
     this.secondaryOperandDisplay.textContent = displayNumber(value);
   }
 
   // Set Operations
-  set operation(value){
+  set operation(value) {
     this.operationDisplay.textContent = value ?? "";
   }
 
   // Adding a Digit Logic
-  addDigit(digit){
-    if(this.primaryOperand ===  0){
-        this.primaryOperand = digit;
-        return;
+  addDigit(digit) {
+    // Check if decimal point is repeted or not
+    if (digit === "." && this.primaryOperandDisplay.dataset.value.includes(".")) {
+      return;
     }
-    this.primaryOperand = this.primaryOperand.toString() + digit;
+
+    if (this.primaryOperand === 0) {
+      this.primaryOperand = digit;
+      return;
+    }
+
+     this.primaryOperand = this.primaryOperandDisplay.dataset.value + digit;
   }
 
   // Making a Clear Method
@@ -51,13 +57,23 @@ class Calculator {
 }
 
 // Variable to format numbers
-const NUMBER_FORMATTER = new Intl.NumberFormat("en", {
-    maximumFractionDigits : 20
-});
+const NUMBER_FORMATTER = new Intl.NumberFormat("en");
 
 // Creating a Function to add commas to the digits
-function displayNumber(number){
-    return NUMBER_FORMATTER.format(number);
+function displayNumber(number) {
+  const stringNumber = number?.toString() || "";
+  // if our number is empty then we will return empty string instead of 0
+  if (stringNumber === "") return "";
+
+  // extract the decimal and digit part
+  const [integer, decimal] = stringNumber.split(".");
+
+  // Return the formatted digit
+  const formattedInteger = NUMBER_FORMATTER.format(integer);
+
+  // if decimal number is null then return formatted digit itself
+  if(decimal == null) return formattedInteger;
+  return formattedInteger + "." + decimal;
 }
 
 export default Calculator;
