@@ -1,95 +1,113 @@
-- My Approach I will be following Object Oriented Programming for this!
+// ...existing code...
 
-- Steps to Perform
-1. Click a number 
-2. Click clear button
-3. Click delete button
-4. Click an operation
-5. Click the (.) button
-6. Click equals
+# Calculator  Beginner-friendly Implementation Guide
 
-- Here i will be creating a separate file for performing calucations logics.
-- Calculator.js
+This guide explains how to build the Day 1 Calculator in a simple, step‑by‑step way. It focuses on clarity so beginners can follow along and understand why each part exists.
 
-- What will be our process/ approach
+## Goal (in one line)
+Create a small, reliable calculator using plain JavaScript that separates the calculator logic from the UI (HTML/CSS).
 
-- Create a class Calculator 
-- Import that in script.js
+## What you'll learn
+- How to organize code into a class (Calculator).
+- How to keep display formatting separate from calculations.
+- Basic event handling to connect buttons to the logic.
+- Common edge cases (multiple decimals, leading zeros, division by zero).
 
-- Setup those event listeners on the actions and then start creating each and every feature.
-    - So how do you do it?
-    - First import the class and then use it's methods to perform each and every action.
-    ```js
-    const calculator = new Calculator();
+## Simple approach (high level)
+1. Make a Calculator class that tracks numbers and the chosen operation.
+2. Keep the UI code (event listeners) in a separate file (script.js).
+3. Update the screen only from values the Calculator exposes (no mixing concerns).
 
-    document.addEventListener("click", (e)=>{
-        if(e.target.matches('[data-all-clear]')){
-            calculator.clear();
-        }
-    })
-    ```
-    - Same way we can create when number is clicked. addDigit
-    - e.target.textContent
-    - Same way do for delete key so instead of addDigit we can do removeDigit!
-    - Same way we will target out operations as chooseOperation
-    - Same way we can perform it for evaluation
+## File structure
+- /Day1-Calculator/
+  - Calculator.js   // core logic (class)
+  - script.js       // connects buttons to Calculator
+  - index.html      // markup for display + buttons
+  - styles.css      // visuals
 
-- Now when i carefully observed the inputs that are for Primary Operand Secondary Operand and Data Operation we come to know that basically it's the thing we have to target in our JS file.
-    - Target primary operand, secondary operand, and operation as our display elements.
-    - So to tell the Calculator what to display and what operations to perform what i will do is pass this information to my class.
+## The Calculator class (plain explanation)
+Think of the Calculator class like the brain. It holds:
+- the current number you are typing (currentOperand),
+- the previous number (previousOperand),
+- the operation you picked (+, -, ×, ÷).
 
-    - Then inside of the calculator you can create a constructor and set their values.
+Calculator methods are small tasks the brain can do:
+- clear(): reset everything to the starting state.
+- delete(): remove the last digit you typed.
+- appendDigit(d): add a digit (or '.') to the current number.
+- chooseOperation(op): pick an operation and move numbers as needed.
+- evaluate(): do the math and store the result as the current number.
+- getDisplayValues(): return strings that the UI can show.
 
-    - Define the clear method
-        - So understanding what actually happens when we press clear btn is all the values get clear basically empty and 0 is displayed we can acheive it through making the primary input 0 and remaining things empty strings.
+## Beginner-friendly method descriptions
+- appendDigit('5')
+  - If current is "0" and you type "5", it becomes "5".
+  - If you already have a decimal point, typing '.' again does nothing.
+  - Keep the current number as a string until evaluate() this avoids rounding issues.
 
-    - Define the addDigit method
-        - How would you do it?
-        - we will add the textContent for primaryOperand as we will get the value
-        - also we will add a check that if our primaryOperand is 0 then we will first overwrite the value and then append values to it.
-        - We can make improvements to our code as our code right now is not a clean code and as per SOLID principles we are repeating so many things like the textContent so the solution for this will be to create getters and setters methods.
+- delete()
+  - Remove the last character of the current number string.
+  - If nothing remains, set current to "0" (so the display never becomes empty).
 
-        - Creating a Simple Function to Display all the values with commas
-        ```js
-        const NUMBER_FORMATTER = new Intl.NumberFormat("en", {
-            maximumFractionDigits : 20
-        });
+- chooseOperation('+')
+  - If there's already a previous number and current number: evaluate first, then set the new operation.
+  - Otherwise move current -> previous and clear current for the next input.
 
-        function displayNumber(number){
-            return NUMBER_FORMATTER.format(number)
-        }
-        ```
-        
-        - So the problem that we are facing here is that when we set the commas to the number what actually happens is that js behind the scene doesn't understand how commas work with number so it's not making it work as we want it to work so for that what we will do is in our setter function what we will do is use 1 property to display numbers and 1 property to perform calculations behind the scenes.
+- evaluate()
+  - Convert the stored strings to numbers and perform the operation.
+  - If dividing by zero, set display to "Error" or a friendly message.
+  - Store the result as the new current number so you can continue chaining operations.
 
-        - So now what happens here is that we cannot add that decimal pointer to our digits in our calc
-        - It's because Js cannot recognize how does the decimal get's added to the number so what we will be doing is
+## Display vs internal value (easy rules)
+- Keep the internal value as a string while typing (e.g., "12.05").
+- For display, format the integer part with commas (1,234) but keep the fractional part intact.
+- Example formatting idea:
+```js
+const formatter = new Intl.NumberFormat('en', { maximumFractionDigits: 20 });
+// Split "1234.567" -> int "1234" and dec "567", format int -> "1,234", join -> "1,234.567"
+```
 
-        - So what we can do is handle the seperately take our number before the decimal and then take out number after the dicimal point 
-            - in out displayNumber function we can check
-            - convert our number to string and then if that number is empty string or not?
-            - if it's empty then we will return  empty string
-            - if it's not empty we will split our stringNumber to the decimal character and then we can get the integer part and the fraction part seperated.
-            - now if we don't have any decimal part we will just format the integer and return it.
-            - also we will add a check when we are adding the decimal part to our digit is that if it has occured once we cannot add it second time if user tries to do so we will just return it!
+## Input rules (practical examples)
+- Prevent "0003": if current is "0" and user types "0", keep it "0". If they type "3" replace "0" with "3".
+- Only allow one '.' per number.
+- Long numbers: let the user type them, but format for display; do not lose precision until evaluate().
 
-    - Define the removeDigit method
-        - Have you ever solved dsa question substring from strings?
-        - The same functionality is what i am going to use it right here in this feature.
+## Example usage flow (what happens when you press buttons)
+1. User types 1 2 3 -> appendDigit makes current "123".
+2. User presses '+' -> chooseOperation moves "123" to previousOperand and sets operation '+'.
+3. User types 4 5 -> current becomes "45".
+4. User presses '=' -> evaluate computes 123 + 45 = 168, sets current to "168", clears previous and operation.
 
-        - Simply creating a variable and then checking if it has length equals to 1 below 1 we will make it 0
-        - Also we will remove the element by using subString method and taking out the inputs from 0 to length-1
+## Quick Start (how to implement step-by-step)
+1. Create Calculator.js with a class skeleton and the method names listed above.
+2. Add simple console.log tests:
+   - new Calculator().appendDigit('5'); check currentOperand.
+3. Implement evaluate() for +, -, *, / with basic checks (division by zero).
+4. Create index.html with buttons that have data attributes (data-number, data-operation, etc.).
+5. In script.js, add event listeners that call the Calculator methods and then update the DOM using getDisplayValues().
 
-    - Define the Operation method
-        - So we didn't create getter and setter methods for operations so let us do that first.
-        - Then what we will do is define a method for operations
-        - take the current operation from get operation
-        - use it to display the value on screen 
-        - then check if we have already used it then we won't be using it again because it will break the functionality
-        
-    - Define the Evaluation method
-        - we will the a result var and then calculate the operations in switch case
-        - then we will clear the calc
-        - print the result
-        - return result
+Example: connecting the "clear" button
+```js
+// script.js (very small example)
+const calc = new Calculator();
+document.querySelector('[data-all-clear]').addEventListener('click', () => {
+  calc.clear();
+  const { primary, secondary, operation } = calc.getDisplayValues();
+  // update UI elements with these strings
+});
+```
 
+## Edge cases to test manually
+- Typing multiple decimals: "3.1.4" should not be allowed.
+- Leading zeros: prevent "0001".
+- Long decimals and large numbers: ensure display formatting works.
+- Division by zero: show "Error" instead of NaN or Infinity.
+- Repeated operations: pressing '+' repeatedly should not break logic.
+
+## Next steps (what to add after basic working version)
+- Unit tests for formatNumber and evaluate logic.
+- Keyboard support (listen for keypresses).
+- Accessibility: ARIA labels for buttons.
+- Improve visuals in styles.css.
+
+---

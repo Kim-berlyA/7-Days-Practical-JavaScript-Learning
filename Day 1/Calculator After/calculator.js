@@ -4,43 +4,47 @@ class Calculator {
     secondaryOperandDisplay,
     operationDisplay
   ) {
-    this.primaryOperandDisplay = primaryOperandDisplay;
-    this.secondaryOperandDisplay = secondaryOperandDisplay;
-    this.operationDisplay = operationDisplay;
+    this.#primaryOperandDisplay = primaryOperandDisplay;
+    this.#secondaryOperandDisplay = secondaryOperandDisplay;
+    this.#operationDisplay = operationDisplay;
 
     this.clear();
   }
 
+  #primaryOperandDisplay
+  #secondaryOperandDisplay
+  #operationDisplay
+
   // Get Primary Operand
   get primaryOperand() {
-    return parseFloat(this.primaryOperandDisplay.dataset.value);
+    return parseFloat(this.#primaryOperandDisplay.dataset.value);
   }
 
   // Set Primary Operand
   set primaryOperand(value) {
-    this.primaryOperandDisplay.dataset.value = value ?? "";
-    this.primaryOperandDisplay.textContent = displayNumber(value);
+    this.#primaryOperandDisplay.dataset.value = value ?? "";
+    this.#primaryOperandDisplay.textContent = displayNumber(value);
   }
 
   // Get Secondary Operand
   get secondaryOperand() {
-    return parseFloat(this.secondaryOperandDisplay.dataset.value);
+    return parseFloat(this.#secondaryOperandDisplay.dataset.value);
   }
 
   // Set Secondary Operand
   set secondaryOperand(value) {
-    this.secondaryOperandDisplay.dataset.value = value ?? "";
-    this.secondaryOperandDisplay.textContent = displayNumber(value);
+    this.#secondaryOperandDisplay.dataset.value = value ?? "";
+    this.#secondaryOperandDisplay.textContent = displayNumber(value);
   }
 
   // Get Operations
   get operation() {
-    return this.operationDisplay.textContent;
+    return this.#operationDisplay.textContent;
   }
 
   // Set Operations
   set operation(value) {
-    this.operationDisplay.textContent = value ?? "";
+    this.#operationDisplay.textContent = value ?? "";
   }
 
   // Adding a Digit Logic
@@ -48,7 +52,7 @@ class Calculator {
     // Check if decimal point is repeted or not
     if (
       digit === "." &&
-      this.primaryOperandDisplay.dataset.value.includes(".")
+      this.#primaryOperandDisplay.dataset.value.includes(".")
     ) {
       return;
     }
@@ -58,12 +62,12 @@ class Calculator {
       return;
     }
 
-    this.primaryOperand = this.primaryOperandDisplay.dataset.value + digit;
+    this.primaryOperand = this.#primaryOperandDisplay.dataset.value + digit;
   }
 
   // Remove a Digit Logic
   removeDigit() {
-    const numberString = this.primaryOperandDisplay.dataset.value;
+    const numberString = this.#primaryOperandDisplay.dataset.value;
     if (numberString <= 1) {
       this.primaryOperand = 0;
       return;
